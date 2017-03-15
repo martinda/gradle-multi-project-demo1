@@ -1,32 +1,36 @@
-# A study on multi-project build
+# A study on multi-project build task visibility and access
 
-The goal of this repository is to study how multi-projet builds work.
+The goal of this repository is to study the visibility of tasks
+in multi-project builds.
 
-The project applies a `buildSrc` plugin called `MyPlugin` to
-subprojects. This plugin adds two custom tasks to the project: `myTask1`
-and `myTask2`.
+The project applies a `buildSrc` plugin called `MyPlugin` to subprojects
+and subprojects only. It adds two custom tasks: `myTask1` and `myTask2`.
+The plugin is not applied to the root project.
 
 One may expect the plugin tasks to be available only in the subprojects,
-but Gradle makes them available at the root project as well. However, this
-is not always made clear when asking gradle for the list of tasks.
+but Gradle makes them callable from the root project as well. It is
+important to understand how Gradle behaves to reduce the confusion around
+tasks in multi-project builds.
 
-Note that the plugin set the `group` and `description` properties of
+Note that the plugin sets the `group` and `description` properties of
 `myTask1`, but not of `myTask2`. This changes the visibility of the tasks
 when asking gradle for the list of tasks, but does not change the behavior.
 
 # Example
 
-The `build.gradle` contains this code:
+The `build.gradle` contains the following code:
 
 ```
 plugins {
     id 'base'
 }
 
+// Create a list of selected subprojects
 def onlySubProjects = subprojects.findAll {
     it.path.contains(':exp1:')
 }
 
+// Apply te plugin only to the selected subprojects
 configure(onlySubProjects) {
     apply plugin: MyPlugin
 }
