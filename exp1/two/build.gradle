@@ -1,3 +1,6 @@
-myTask {
-    msg = '4 5 6'
+myTask1 {
+    msg = 'task1 two'
+}
+myTask2 {
+    msg = 'task2 two'
 }
