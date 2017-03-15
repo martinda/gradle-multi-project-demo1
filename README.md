@@ -55,8 +55,6 @@ myTask1 {
 }
 ```
 
-The above code in the root project `build.gradle` file will fail.
-
 When asking for the list of tasks, gradle says that `myTask1` is
 available to the root project:
 
