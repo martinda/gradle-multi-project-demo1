@@ -32,7 +32,7 @@ configure(onlySubProjects) {
 }
 ```
 
-When asking for the list of tasks, gradle says the `MyPlugin` tasks are
+When asking for the list of tasks, gradle says that `myTask1` is
 available to the root project:
 
 ```
@@ -44,8 +44,11 @@ myTask1 - Print a message
 ...
 ```
 
-Why is `myTask1` accessible from the rootProject when ostensibly it has
-only been applied to the subproject?
+A user may wonder why `myTask1` is accessible from the rootProject
+when ostensibly it has only been applied to the subproject. It turns
+out this is a pretty useful feature: from the root project, you can
+execute subproject tasks, without having to specify the full path to
+the subproject task itself.
 
 When asking gradle for the list of all tasks, gradle says the subprojects
 have the following tasks, but does not list that the root project still
@@ -66,6 +69,11 @@ exp1:two:myTask2
 ...
 
 ```
+
+Yes, Gradle now tells you that those tasks are really subproject tasks,
+but it no longer tells you that the same tasks as also callable from
+the root project. To know what's available from the root project, you
+need to run `./gradlew tasks`.
 
 When running the tasks from the root project, gradle dives into the
 subprojects and runs the tasks:
@@ -100,5 +108,5 @@ Total time: 0.65 secs
 Task visibility can be confusing to the user as shown above. To summarize:
 
 * A task that was created in the subproject only, can be run from the root project.
-* A subproject task that is not listed in the root project using `gradle tasks`, can be executed at the root project (e.g. `myTask2`).
+* A subproject task that is not listed by `gradle tasks`, can be run from the root project (e.g. `myTask2`).
 
