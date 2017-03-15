@@ -16,6 +16,15 @@ Note that the plugin sets the `group` and `description` properties of
 `myTask1`, but not of `myTask2`. This changes the visibility of the tasks
 when asking gradle for the list of tasks, but does not change the behavior.
 
+# Theory
+
+There are three different independent aspects to tasks from the user
+point of view.
+
+* *configurability*: A task can only be configured in the project where it has been applied.
+* *visibility*: A task is visible when running `./gradlew tasks` when its `group` and `description` have been set. It is also visible when typing `./gradlew tasks --all` regardless of `group` and `description`.
+* *callability*: A task can be called from its subproject or from the root project, whether it is visible or not.
+
 # Example
 
 The `build.gradle` contains the following code:
@@ -36,6 +45,19 @@ configure(onlySubProjects) {
 }
 ```
 
+The plugin was applied only to the subprojects. If you try to configure
+the plugin tasks in the root project, it will fail. In order words,
+if you try to configure `myTask1` or `myTask2` from the root project,
+it will not work:
+
+```
+myTask1 {
+    msg = 'root project'
+}
+```
+
+The above code in the root project `build.gradle` file will fail.
+
 When asking for the list of tasks, gradle says that `myTask1` is
 available to the root project:
 
@@ -54,8 +76,8 @@ useful feature: from the root project, you can execute subproject tasks,
 without having to specify the full path to the subproject.
 
 When asking gradle for the list of all tasks, gradle says the subprojects
-have the tasks, but does not list that the root project still has
-them too:
+have the tasks, but does not list that the root project can still
+call them:
 
 ```
 $ ./gradlew tasks --all
@@ -75,7 +97,7 @@ exp1:two:myTask2
 
 Yes, Gradle now tells you that those tasks are really subproject tasks,
 but it no longer tells you that the same tasks as also callable from
-the root project. To know what's available from the root project, you
+the root project. To know what's callable from the root project, you
 need to run `./gradlew tasks`.
 
 When running the tasks from the root project, gradle dives into the
