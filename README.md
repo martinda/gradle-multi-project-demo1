@@ -1,11 +1,11 @@
-# A study on multi-project build task visibility and access
+# A study on tasks visibility in multi-project builds
 
 The goal of this repository is to study the visibility of tasks
 in multi-project builds.
 
-The project applies a `buildSrc` plugin called `MyPlugin` to subprojects
-and subprojects only. It adds two custom tasks: `myTask1` and `myTask2`.
-The plugin is not applied to the root project.
+The project in this study applies a `buildSrc` plugin called `MyPlugin`
+to subprojects (and subprojects only). It adds two custom tasks: `myTask1`
+and `myTask2`.  The plugin is not applied to the root project.
 
 One may expect the plugin tasks to be available only in the subprojects,
 but Gradle makes them callable from the root project as well. It is
@@ -30,7 +30,7 @@ def onlySubProjects = subprojects.findAll {
     it.path.contains(':exp1:')
 }
 
-// Apply te plugin only to the selected subprojects
+// Apply the plugin only to the selected subprojects
 configure(onlySubProjects) {
     apply plugin: MyPlugin
 }
@@ -48,15 +48,14 @@ myTask1 - Print a message
 ...
 ```
 
-A user may wonder why `myTask1` is accessible from the rootProject
-when ostensibly it has only been applied to the subproject. It turns
-out this is a pretty useful feature: from the root project, you can
-execute subproject tasks, without having to specify the full path to
-the subproject task itself.
+A user may wonder why `myTask1` is accessible from the rootProject when
+it has only been applied to the subproject. It turns out this is a pretty
+useful feature: from the root project, you can execute subproject tasks,
+without having to specify the full path to the subproject.
 
 When asking gradle for the list of all tasks, gradle says the subprojects
-have the following tasks, but does not list that the root project still
-has them too:
+have the tasks, but does not list that the root project still has
+them too:
 
 ```
 $ ./gradlew tasks --all
@@ -96,7 +95,7 @@ Total time: 0.664 secs
 ```
 
 And the same happens when calling `myTask2` (despite it not being listed
-in as a root project task):
+as a root project task):
 
 ```
 :exp1:one:myTask2
@@ -109,8 +108,8 @@ BUILD SUCCESSFUL
 Total time: 0.65 secs
 ```
 
-Task visibility can be confusing to the user as shown above. To summarize:
+Task visibility can be confusing to the user at first. To summarize:
 
 * A task that was created in the subproject only, can be run from the root project.
-* A subproject task that is not listed by `gradle tasks`, can be run from the root project (e.g. `myTask2`).
+* A subproject task that is not listed by `gradle tasks`, can also be run from the root project (e.g. `myTask2`).
 
