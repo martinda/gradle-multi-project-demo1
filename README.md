@@ -23,7 +23,7 @@ point of view.
 
 * *configurability*: A task can only be configured in the context of the project or subproject where it has been applied.
 * *visibility*: A task is visible when running `./gradlew tasks` when its `group` and `description` have been set. It is also visible when typing `./gradlew tasks --all` regardless of `group` and `description`.
-* *callability*: A task can be called from its subproject or from the root project, whether it is visible or not.
+* *callability*: A task can be called from its subproject or from the root project, whether it is visible or not to `./gradlew tasks`.
 
 # Example
 
