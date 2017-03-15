@@ -1,0 +1,11 @@
+plugins {
+    id 'base'
+}
+
+def onlySubProjects = subprojects.findAll {
+    it.path.contains(':exp1:')
+}
+
+configure(onlySubProjects) {
+    apply plugin: MyPlugin
+}
