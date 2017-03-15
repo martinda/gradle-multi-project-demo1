@@ -45,10 +45,9 @@ configure(onlySubProjects) {
 }
 ```
 
-The plugin was applied only to the subprojects. If you try to configure
-the plugin tasks in the root project, it will fail. In order words,
-if you try to configure `myTask1` or `myTask2` from the root project,
-it will not work:
+The plugin was applied only to the subprojects. If you tried to configure
+the plugin tasks in the root project, it would fail. In other words,
+the following will not work in the root project `build.gradle`:
 
 ```
 myTask1 {
