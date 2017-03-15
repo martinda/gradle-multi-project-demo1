@@ -21,7 +21,7 @@ when asking gradle for the list of tasks, but does not change the behavior.
 There are three different independent aspects to tasks from the user
 point of view.
 
-* *configurability*: A task can only be configured in the project where it has been applied.
+* *configurability*: A task can only be configured in the context of the project or subproject where it has been applied.
 * *visibility*: A task is visible when running `./gradlew tasks` when its `group` and `description` have been set. It is also visible when typing `./gradlew tasks --all` regardless of `group` and `description`.
 * *callability*: A task can be called from its subproject or from the root project, whether it is visible or not.
 
