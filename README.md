@@ -93,7 +93,7 @@ exp1:two:myTask2
 ```
 
 Yes, Gradle now tells you that those tasks are really subproject tasks,
-but it no longer tells you that the same tasks as also callable from
+but it no longer tells you that the same tasks are also callable from
 the root project. To know what's callable from the root project, you
 need to run `./gradlew tasks`.
 
